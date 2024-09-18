@@ -1,0 +1,1 @@
+{|env|{(\mfccRaw:Buffer(s),\mfccMean:Buffer(s),\mfccFlat:Buffer(s))}}

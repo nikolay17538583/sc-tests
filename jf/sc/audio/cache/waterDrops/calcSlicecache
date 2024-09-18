@@ -1,0 +1,1 @@
+{|env|{|bufs,sliceStart,sliceEnd|FluidBufMFCC.processBlocking(source:env[\audio],startFrame:sliceStart,numFrames:sliceEnd-sliceStart,features:bufs[\mfccRaw],numCoeffs:21);FluidBufStats.processBlocking(source:bufs[\mfccRaw],stats:bufs[\mfccMean],select:[\mean]);FluidBufFlatten.processBlocking(source:bufs[\mfccMean],destination:bufs[\mfccFlat]);bufs[\mfccFlat]}}

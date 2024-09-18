@@ -1,0 +1,1 @@
+{|env|varout=FluidDataSet(s);varl=FluidLabelSet(s);varkmeans=FluidKMeans(s,4).fitPredict(env[\grid],l);kmeans.getMeans(out);Server.default.sync;out;}

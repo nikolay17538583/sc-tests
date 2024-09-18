@@ -1,0 +1,1 @@
+{|env|vard;env[\clusterDataSet].dump{|f|d=f["data"].collect({|v|v}).asArray};{d}}

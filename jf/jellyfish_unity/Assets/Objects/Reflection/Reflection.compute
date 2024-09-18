@@ -1,0 +1,102 @@
+#pragma kernel FirstPass
+#pragma kernel SecondPass
+#pragma kernel ThirdPass
+
+Texture2D<float4> incoming_texture; // some size
+SamplerState linearClampSampler;
+
+
+struct ReflectionData
+{
+    float2 lux_centroid;
+    float lux_sum;
+};
+
+
+RWStructuredBuffer<ReflectionData> lvl1; // 32x32 = 1024 -> sizeof(float)*3
+RWStructuredBuffer<ReflectionData> lvl2; // 8x8 = 64 -> sizeof(float)*3
+RWStructuredBuffer<float3> result; // 1x1 = 1 -> sizeof(float)*3
+
+float luminance(const float4 colour)
+{
+    const float l = clamp((colour.r + colour.g + colour.b) / 3, 0, 1);
+    return l*l;
+}
+
+float get_lux_at(float2 coord){
+    const float4 colour = incoming_texture.SampleLevel(linearClampSampler, coord, 0);
+    return luminance(colour);
+}
+
+[numthreads(32, 32, 1)]
+void FirstPass(uint3 id : SV_DispatchThreadID)
+{
+    const float start_x = (float)id.x / 32.0f;
+    const float stop_x = (float)(id.x + 1) / 32.0f;
+    const float start_y = (float)id.y / 32.0f;
+    const float stop_y = (float)(id.y + 1) / 32.0f;
+
+    ReflectionData r = {0.0f, 0.0f, 0.0f};
+
+    // break image into 32x32 squares and lerp through them step_size times 
+    const float step_size = 12.0f;
+    const float detail_step = 1.0f / (32.0f / step_size);
+    for (float y = start_y; y < stop_y; y += detail_step)
+    {
+        for (float x = start_x; x < stop_x; x += detail_step)
+        {
+            const float2 coord = {x, y}; // [0-1]
+            const float lux = get_lux_at(coord);
+
+            r.lux_sum += lux;
+            r.lux_centroid += coord * lux;
+        }
+    }
+    lvl1[id.x + id.y * 32] = r;
+}
+
+[numthreads(8, 8, 1)]
+void SecondPass(uint3 id : SV_DispatchThreadID)
+{
+    const uint stride = 32/8;
+    const uint start_x = id.x * stride;
+    const uint stop_x = (id.x + 1) * stride;
+    const uint start_y = id.y * stride;
+    const uint stop_y = (id.y + 1) * stride;
+
+    ReflectionData r = {0.0f, 0.0f, 0.0f};
+
+    for (uint y = start_y; y < stop_y; ++y)
+    {
+        for (uint x = start_x; x < stop_x; ++x)
+        {
+            const uint index = x + y * 32;
+            r.lux_sum += lvl1[index].lux_sum;
+            r.lux_centroid += lvl1[index].lux_centroid;
+        }
+    }
+    lvl2[id.x + id.y*8] = r;
+}
+
+// there are so many improvements here if needed.
+// try summing along the x axis, the sum the y axis on the cpu,
+// try summing all 64 on the cpu
+[numthreads(1, 1, 1)]
+void ThirdPass(uint3 id : SV_DispatchThreadID)
+{
+    ReflectionData r = {0.0f, 0.0f, 0.0f};
+
+    for (uint y = 0; y < 8; ++y)
+    {
+        for (uint x = 0; x < 8; ++x)
+        {
+            const uint index = x + y * 8;
+            r.lux_sum += lvl2[index].lux_sum;
+            r.lux_centroid += lvl2[index].lux_centroid;
+
+        }
+    }
+    r.lux_centroid /= r.lux_sum;
+    //r.lux_centroid = (r.lux_centroid * 2.0f) - 1.0f;
+    result[0] = float3(r.lux_centroid.x, r.lux_centroid.y, r.lux_sum);
+}

@@ -1,0 +1,1 @@
+{|env|varb=Buffer(s);FluidBufNoveltySlice.processBlocking(s,source:env[\audio],indices:b,threshold:0,minSliceLength:5);b}

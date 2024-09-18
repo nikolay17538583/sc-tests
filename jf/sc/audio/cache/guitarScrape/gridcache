@@ -1,0 +1,1 @@
+{|env|vargrid=FluidDataSet(s);varout=FluidDataSet(s);FluidGrid(s,2).fitTransform(env[\mappedDataSet],grid,{"done".warn});Server.default.sync;FluidNormalize(s).fitTransform(grid,out);out;}

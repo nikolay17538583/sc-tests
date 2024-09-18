@@ -1,0 +1,1 @@
+{|env|varmapper=FluidUMAP(s,minDist:0.2,iterations:200,learnRate:0.2,numNeighbours:10);varraw=FluidDataSet(s);mapper.fitTransform(env[\rawDataSet],raw);Server.default.sync;env[\normFunc].(raw);}

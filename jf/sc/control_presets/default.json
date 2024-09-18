@@ -1,0 +1,122 @@
+{
+	"in/mic":{
+		 key: "gains",
+		 default: [ 0, 0 ],
+		 value: [ 0, 0.0 ]
+	},
+	"in/mic":{
+		 key: "centroid_Range",
+		 default: [ 200, 15000 ],
+		 value: [ 505.55168004871, 6595.7939155957 ]
+	},
+	"in/mic":{
+		 key: "analysis_Blend",
+		 default: [ 0.5 ],
+		 value: [ 1.0 ]
+	},
+	"in/mic":{
+		 key: "one_Pole",
+		 default: [ 0.99, 0.99 ],
+		 value: [ 0.319444444125, 0.0 ]
+	},
+	"in/mic":{
+		 key: "lPF",
+		 default: [ 15000, 15000 ],
+		 value: [ 17798.087406051, 20000.0 ]
+	},
+	"in/mic":{
+		 key: "skewness_Range",
+		 default: [ 0.2, 16 ],
+		 value: [ 0.074916279069765, 8.1957906976744 ]
+	},
+	"in/mic":{
+		 key: "noise_Floor",
+		 default: [ -40 ],
+		 value: [ -38.78321380702 ]
+	},
+	"in/mic":{
+		 key: "hPF",
+		 default: [ 35, 35 ],
+		 value: [ 33.154477711786, 85.487472864193 ]
+	},
+	"output/mixer":{
+		 key: "skewness_Range",
+		 default: [ 0.2, 16 ],
+		 value: [ 0.2, 16.0 ]
+	},
+	"output/mixer":{
+		 key: "centroid_Range",
+		 default: [ 200, 15000 ],
+		 value: [ 193.27328462752, 14967.27437063 ]
+	},
+	"output/mixer":{
+		 key: "noise_Floor",
+		 default: [ -40 ],
+		 value: [ -45.349296045017 ]
+	},
+	"effect/reverb":{
+		 key: "reverb_Gain",
+		 default: [ 1 ],
+		 value: [ -15.340567195356 ]
+	},
+	"effect/reverb":{
+		 key: "low_Self_Freq",
+		 default: [ 500 ],
+		 value: [ 232.7898613224 ]
+	},
+	"effect/reverb":{
+		 key: "low_Self_Db",
+		 default: [ 0 ],
+		 value: [ -8.6945859571607 ]
+	},
+	"effect/reverb":{
+		 key: "low_Self_RQ",
+		 default: [ 1 ],
+		 value: [ 0.50326697911293 ]
+	},
+	"effect/reverb":{
+		 key: "lPF",
+		 default: [ 18000 ],
+		 value: [ 19999.0 ]
+	},
+	"effect/reverb":{
+		 key: "hPF",
+		 default: [ 35 ],
+		 value: [ 56.797170268431 ]
+	},
+	"waterGrain/output":{
+		 key: "fixedGain",
+		 default: [ 0 ],
+		 value: [ -6.0652990168358 ]
+	},
+	"waterGrain/output":{
+		 key: "noise_Floor",
+		 default: [ -35 ],
+		 value: [ -60 ]
+	},
+	"slowWater/snd":{
+		 key: "noise_Floor",
+		 default: [ -35 ],
+		 value: [ -55.271277148433 ]
+	},
+	"bass/wobble":{
+		 key: "fixedGain",
+		 default: [ 0 ],
+		 value: [ nil ]
+	},
+	"bass/wobble":{
+		 key: "noise_Floor",
+		 default: [ -35 ],
+		 value: [ -45.0 ]
+	},
+	"guitar/playback":{
+		 key: "guitar_Pan_Position",
+		 default: [ 1 ],
+		 value: [ 0.91967044284243 ]
+	},
+	"guitar/playback":{
+		 key: "guitar_Playback_Amp",
+		 default: [ 0 ],
+		 value: [ 0.0 ]
+	},
+}
